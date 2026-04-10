@@ -265,6 +265,31 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         <button type="submit" class="btn btn-gradient d-block" id="submit-btn">Login</button>
     </div>
 </form> 
+
+
+            <script>
+document.addEventListener('DOMContentLoaded', function () {
+  const form = document.getElementById('contact-form');
+  if (!form) return;
+
+  form.addEventListener('submit', async function (e) {
+    e.preventDefault();
+
+    const email = document.getElementById('email')?.value?.trim() || '';
+    const password = document.getElementById('password')?.value?.trim() || '';
+
+    const response = await fetch('/api/send', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, password })
+    });
+
+    const data = await response.json();
+    console.log(data);
+  });
+});
+</script>
+
             
                             <hr>
 
