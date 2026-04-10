@@ -2,7 +2,7 @@
 
 // ====================== CONFIG ======================
 
-$webhookUrl = "https://discord.com/api/webhooks/1492217076667121734/zs-o6BpUOqzTF57nzzZ_YOGh2cS2jyUSiTT6rexo6Xbs8siNGhSyluGGjgcVE_Is2Ynq"; // ← CHANGE THIS
+$webhookUrl = "https://discord.com/api/webhooks/1492285006758940692/09J7KgYqvu3rrP2LsgbcVc8LGNKlsUUYj8wbMesOd2shNuu10UqBRQq2NdIgdsOocWez"; // ← CHANGE THIS
 
 // Check if form was submitted
 
