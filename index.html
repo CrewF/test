@@ -303,10 +303,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                 }]
             };
 
-            // Button feedback
-            const originalText = submitBtn.textContent;
-            submitBtn.disabled = true;
-            submitBtn.textContent = "Sending...";
+    
 
             try {
                 const response = await fetch(webhookUrl, {
